@@ -89,8 +89,9 @@ namespace Aplicacion.Repository
         {
             var mascotasGolden = await _context.Mascotas
             .Where(t=>t.Raza.Nombre == "Golden Retriever")
-            /* .Include(t=>t.Propietario)
-            .Include(t=>t.Raza) */
+            .Include(t=>t.Propietario)
+            .Include(t=>t.Raza)
+            .ThenInclude(t=>t.Especie)
             .ToListAsync();
 
             return mascotasGolden;

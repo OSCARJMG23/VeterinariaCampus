@@ -37,7 +37,7 @@ namespace Aplicacion.Repository
         public async Task<IEnumerable<Propietario>> GetPropietariosWhitMascotas()
         {
             var propietariosWhitMascotas = await _context.Propietarios
-                /* .Include(t=>t.Mascotas) */
+                .Include(t=>t.Mascotas)
                 .ToListAsync();
             return propietariosWhitMascotas;
         }

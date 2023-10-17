@@ -88,14 +88,14 @@ namespace ApiVet.Controllers
         [HttpGet("mascota-Y-propietarip-goldenRetriever")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<MascotasDto>>> GetMascotaYpropietarioGoldenR()
+        public async Task<ActionResult<IEnumerable<MascotaDto>>> GetMascotaYpropietarioGoldenR()
         {
             var mascota = await _unitOfWork.Mascotas.GetMascotaYpropietarioGoldenRetriver();
             if (mascota == null)
             {
                 return BadRequest();
             }
-            return _mapper.Map<List<MascotasDto>>(mascota);
+            return _mapper.Map<List<MascotaDto>>(mascota);
         }
 
         
