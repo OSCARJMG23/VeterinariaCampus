@@ -47,10 +47,10 @@ namespace ApiVet.Controllers
         [HttpGet("con/{medicamentoConsulta}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Proveedor>>> GetProveedorXmedicamento(string medicamentoConsulta)
+        public async Task<ActionResult<IEnumerable<ProveedoresDto>>> GetProveedorXmedicamento(string medicamentoConsulta)
         {
             var proveedor = await _unitOfWork.Proveedores.GetProveedoresXmedicamento(medicamentoConsulta);
-            return Ok(proveedor);
+            return _mapper.Map<List<ProveedoresDto>>(proveedor);
         }
         
         [HttpPost]

@@ -47,18 +47,18 @@ namespace ApiVet.Controllers
         [HttpGet("laboratorio-genfar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Medicamento>>> GetMedicamentoLaboratorioGenfar()
+        public async Task<ActionResult<IEnumerable<MedicamentosDto>>> GetMedicamentoLaboratorioGenfar()
         {
             var medicamento = await _unitOfWork.Medicamentos.GetMedicamentoLaboratorioGenfar();
-            return Ok(medicamento);
+            return _mapper.Map<List<MedicamentosDto>>(medicamento);
         }
         [HttpGet("precio-mayor-50k")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Medicamento>>> GetMedicamentoPrecioMayor50k()
+        public async Task<ActionResult<IEnumerable<MedicamentoDto>>> GetMedicamentoPrecioMayor50k()
         {
             var medicamento = await _unitOfWork.Medicamentos.MedicamentoPrecioMayor50K();
-            return Ok(medicamento);
+            return _mapper.Map<List<MedicamentoDto>>(medicamento);
         }
         
         [HttpPost]

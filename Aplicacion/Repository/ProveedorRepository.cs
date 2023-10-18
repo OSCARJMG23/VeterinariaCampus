@@ -39,6 +39,7 @@ namespace Aplicacion.Repository
             var proveedoresXMedicamento = await _context.Proveedores
             .Where(t=>t.MedicamentosProveedores
                 .Any(t=>t.Medicamento.Nombre == medicamentoConsulta))
+                .Include(t=>t.Medicamentos)
                 .ToListAsync();
 
             return proveedoresXMedicamento;

@@ -47,10 +47,10 @@ namespace ApiVet.Controllers
         [HttpGet("cirujano-vascular")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Veterinario>> GetVetCirujanoVascu()
+        public async Task<ActionResult<IEnumerable<VeterinariosDto>>> GetVetCirujanoVascu()
         {
             var veterinario = await _unitOfWork.Veterinarios.GetVeterinarioCirujanoVascular();
-            return Ok(veterinario);
+            return _mapper.Map<List<VeterinariosDto>>(veterinario);
         }
         
         [HttpPost]

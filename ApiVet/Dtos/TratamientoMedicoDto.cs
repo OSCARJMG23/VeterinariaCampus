@@ -12,8 +12,8 @@ namespace ApiVet.Dtos
         public DateTime FechaAdministracion { get; set; }
         public string Observacion { get; set; }
         public int IdCitaFk { get; set; }
-        public Cita Cita { get; set; }
+        public CitaDto Cita { get; set; }
         public int IdMedicamentoFk { get; set; }
-        public Medicamento Medicamento { get; set; }
+        public MedicamentoDto Medicamento { get; set; }
     }
 }

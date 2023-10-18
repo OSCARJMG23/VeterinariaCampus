@@ -39,6 +39,9 @@ namespace Aplicacion.Repository
         {
             var mascotaFelina = await _context.Mascotas
             .Where(t=> t.Raza.Especie.Nombre == "Felina")
+            .Include(t=>t.Propietario)
+            .Include(t=>t.Raza)
+            .ThenInclude(t=>t.Especie)
             .ToListAsync();
 
             return mascotaFelina;
@@ -55,6 +58,11 @@ namespace Aplicacion.Repository
                     t.Fecha <= primerTrimestreFin)
             .Select(t=>t.Mascota)
             .Distinct()
+            .Include(t=>t.Propietario)
+            .Include(t=>t.Raza)
+            .ThenInclude(t=>t.Especie)
+            .Include(t=>t.Citas)
+            .ThenInclude(t=>t.Veterinario)
             .ToListAsync();
 
             return mascotaVacuna;
@@ -80,6 +88,11 @@ namespace Aplicacion.Repository
             .Where(t=> t.Veterinario.Nombre == veterinarioConsulta)
             .Select(t=>t.Mascota)
             .Distinct()
+            .Include(t=>t.Propietario)
+            .Include(t=>t.Raza)
+            .ThenInclude(t=>t.Especie)
+            .Include(t=>t.Citas)
+            .ThenInclude(t=>t.Veterinario)
             .ToListAsync();
 
             return mascotasXveterinario;

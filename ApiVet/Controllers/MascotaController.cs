@@ -48,19 +48,19 @@ namespace ApiVet.Controllers
         [HttpGet("especie-felina")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Mascota>>> GetMascotaFelina(int id)
+        public async Task<ActionResult<IEnumerable<MascotaDto>>> GetMascotaFelina(int id)
         {
             var mascota = await _unitOfWork.Mascotas.GetMascotasFelinas();
-            return Ok(mascota);
+            return _mapper.Map<List<MascotaDto>>(mascota);
         }
 
         [HttpGet("cita-vacunacion-2023")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Mascota>>> GetMascotaCitaVacunacion2023()
+        public async Task<ActionResult<IEnumerable<MascotasDto>>> GetMascotaCitaVacunacion2023()
         {
             var mascota = await _unitOfWork.Mascotas.MascotaCitaXvacunacion2023();
-            return Ok(mascota);
+            return _mapper.Map<List<MascotasDto>>(mascota);
         }
 
         [HttpGet("mascotaXespecie")]
@@ -75,14 +75,14 @@ namespace ApiVet.Controllers
         [HttpGet("mascota-atendidaXveterinario/{veterinarioConsulta}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<Mascota>>> GetMascotaAntendidaXveterinario(string veterinarioConsulta)
+        public async Task<ActionResult<IEnumerable<MascotasDto>>> GetMascotaAntendidaXveterinario(string veterinarioConsulta)
         {
             var mascota = await _unitOfWork.Mascotas.GetMascotaAtendidaXveterinario(veterinarioConsulta);
             if (mascota == null)
             {
                 return BadRequest();
             }
-            return Ok(mascota);
+            return _mapper.Map<List<MascotasDto>>(mascota);
         }
 
         [HttpGet("mascota-Y-propietarip-goldenRetriever")]

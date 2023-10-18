@@ -38,6 +38,8 @@ namespace Aplicacion.Repository
         {
             var propietariosWhitMascotas = await _context.Propietarios
                 .Include(t=>t.Mascotas)
+                .ThenInclude(t=>t.Raza)
+                    .ThenInclude(t=>t.Especie)
                 .ToListAsync();
             return propietariosWhitMascotas;
         }

@@ -38,6 +38,8 @@ namespace Aplicacion.Repository
         {
             var veterinarioVascular = await  _context.Veterinarios
             .Where(t=>t.Especialidad == "Cirujano Vascular")
+            .Include(t=>t.Citas)
+            .ThenInclude(t=>t.Mascota)
             .ToListAsync();
 
             return veterinarioVascular;
