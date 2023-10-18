@@ -25,8 +25,7 @@ namespace Aplicacion.Repository
             }
             query = query.OrderBy(p => p.Id);
             var totalRegistros = await query.CountAsync();
-            var registros = await query
-                                    /* .Include(u =>u.Proveedor) */
+            var registros = await query                    
                                     .Skip((pageIndex - 1) * pageSize)
                                     .Take(pageSize)
                                     .ToListAsync();

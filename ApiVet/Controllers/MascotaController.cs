@@ -85,7 +85,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<List<MascotasDto>>(mascota);
         }
 
-        [HttpGet("mascota-Y-propietarip-goldenRetriever")]
+        [HttpGet("mascota-Y-propietario-goldenRetriever")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MascotaDto>>> GetMascotaYpropietarioGoldenR()
