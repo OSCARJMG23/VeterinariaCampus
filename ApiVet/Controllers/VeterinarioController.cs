@@ -8,6 +8,7 @@ using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<VeterinarioDto>>> Get([FromQuery]Params veterinarioParams)
@@ -35,8 +37,21 @@ namespace ApiVet.Controllers
             var listaVeterinariosDto= _mapper.Map<List<VeterinarioDto>>(veterinario.registros);
             return new Pager<VeterinarioDto>(listaVeterinariosDto, veterinario.totalRegistros,veterinarioParams.PageIndex,veterinarioParams.PageSize,veterinarioParams.Search);
         }
+
+        [HttpGet]
+        [Authorize]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<VeterinarioDto>>> Get1()
+        {
+           var veterinarios = await _unitOfWork.Veterinarios.GetNormally();
+
+           return _mapper.Map<List<VeterinarioDto>>(veterinarios);
+        }
         
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<VeterinariosDto>> Get(int id)
@@ -45,6 +60,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<VeterinariosDto>(veterinario);
         }
         [HttpGet("cirujano-vascular")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<VeterinariosDto>>> GetVetCirujanoVascu()
@@ -54,6 +70,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Veterinario>> Post(VeterinarioDto veterinarioDto)
@@ -71,6 +88,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,6 +105,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

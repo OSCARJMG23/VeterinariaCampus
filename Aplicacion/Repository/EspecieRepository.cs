@@ -32,5 +32,11 @@ namespace Aplicacion.Repository
                                     .ToListAsync();
             return (totalRegistros, registros);
         }
+       /*  public async Task<IEnumerable<Especie>> GetNormally()
+        {
+            var especie = await _context.Especies
+            .ToListAsync();
+            return especie;
+        } */
     }
 }

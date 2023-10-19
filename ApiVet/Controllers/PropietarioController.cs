@@ -8,6 +8,7 @@ using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<PropietarioDto>>> Get([FromQuery]Params propietarioParams)
@@ -35,8 +37,21 @@ namespace ApiVet.Controllers
             var listaPropietariosDto= _mapper.Map<List<PropietarioDto>>(propietario.registros);
             return new Pager<PropietarioDto>(listaPropietariosDto, propietario.totalRegistros,propietarioParams.PageIndex,propietarioParams.PageSize,propietarioParams.Search);
         }
+
+        [HttpGet]
+        [Authorize]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<PropietarioDto>>> Get1()
+        {
+           var propietarios = await _unitOfWork.Propietarios.GetNormally();
+
+           return _mapper.Map<List<PropietarioDto>>(propietarios);
+        }
         
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PropietariosDto>> Get(int id)
@@ -45,6 +60,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<PropietariosDto>(propietario);
         }
         [HttpGet("mascotas")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<PropietariosDto>>> GetPropietarioConMascotas()
@@ -54,6 +70,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Propietario>> Post(PropietarioDto propietarioDto)
@@ -71,6 +88,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,6 +105,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

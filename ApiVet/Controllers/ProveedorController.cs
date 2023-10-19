@@ -8,6 +8,7 @@ using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<ProveedorDto>>> Get([FromQuery]Params proveedorParams)
@@ -35,8 +37,21 @@ namespace ApiVet.Controllers
             var listaProveedoresDto= _mapper.Map<List<ProveedorDto>>(proveedor.registros);
             return new Pager<ProveedorDto>(listaProveedoresDto, proveedor.totalRegistros,proveedorParams.PageIndex,proveedorParams.PageSize,proveedorParams.Search);
         }
+
+        [HttpGet]
+        [Authorize]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<ProveedorDto>>> Get1()
+        {
+           var proveedors = await _unitOfWork.Proveedores.GetNormally();
+
+           return _mapper.Map<List<ProveedorDto>>(proveedors);
+        }
         
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ProveedoresDto>> Get(int id)
@@ -45,6 +60,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<ProveedoresDto>(proveedor);
         }
         [HttpGet("con/{medicamentoConsulta}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<ProveedoresDto>>> GetProveedorXmedicamento(string medicamentoConsulta)
@@ -54,6 +70,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Proveedor>> Post(ProveedorDto proveedorDto)
@@ -71,6 +88,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,6 +105,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

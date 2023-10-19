@@ -8,6 +8,7 @@ using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<MascotaDto>>> Get([FromQuery]Params mascotaParams)
@@ -35,8 +37,21 @@ namespace ApiVet.Controllers
             var listaMascotasDto= _mapper.Map<List<MascotaDto>>(mascota.registros);
             return new Pager<MascotaDto>(listaMascotasDto, mascota.totalRegistros,mascotaParams.PageIndex,mascotaParams.PageSize,mascotaParams.Search);
         }
+
+        [HttpGet]
+        [Authorize]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<MascotaDto>>> Get1()
+        {
+           var mascotas = await _unitOfWork.Mascotas.GetNormally();
+
+           return _mapper.Map<List<MascotaDto>>(mascotas);
+        }
         
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<MascotasDto>> Get(int id)
@@ -46,6 +61,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet("especie-felina")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MascotaDto>>> GetMascotaFelina(int id)
@@ -55,6 +71,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet("cita-vacunacion-2023")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MascotasDto>>> GetMascotaCitaVacunacion2023()
@@ -64,6 +81,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet("mascotaXespecie")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<object>>> GetMascotaXespecie()
@@ -73,6 +91,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet("mascota-atendidaXveterinario/{veterinarioConsulta}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MascotasDto>>> GetMascotaAntendidaXveterinario(string veterinarioConsulta)
@@ -86,6 +105,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet("mascota-Y-propietario-goldenRetriever")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MascotaDto>>> GetMascotaYpropietarioGoldenR()
@@ -100,6 +120,7 @@ namespace ApiVet.Controllers
 
         
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Mascota>> Post(MascotaDto mascotaDto)
@@ -117,6 +138,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -133,6 +155,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

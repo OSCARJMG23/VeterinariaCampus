@@ -8,6 +8,7 @@ using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<MedicamentoDto>>> Get([FromQuery]Params medicamentoParams)
@@ -35,8 +37,21 @@ namespace ApiVet.Controllers
             var listaMedicamentosDto= _mapper.Map<List<MedicamentoDto>>(medicamento.registros);
             return new Pager<MedicamentoDto>(listaMedicamentosDto, medicamento.totalRegistros,medicamentoParams.PageIndex,medicamentoParams.PageSize,medicamentoParams.Search);
         }
+
+        [HttpGet]
+        [Authorize]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<MedicamentoDto>>> Get1()
+        {
+           var medicamentos = await _unitOfWork.Medicamentos.GetNormally();
+
+           return _mapper.Map<List<MedicamentoDto>>(medicamentos);
+        }
         
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<MedicamentosDto>> Get(int id)
@@ -45,6 +60,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<MedicamentosDto>(medicamento);
         }
         [HttpGet("laboratorio-genfar")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MedicamentosDto>>> GetMedicamentoLaboratorioGenfar()
@@ -53,6 +69,7 @@ namespace ApiVet.Controllers
             return _mapper.Map<List<MedicamentosDto>>(medicamento);
         }
         [HttpGet("precio-mayor-50k")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MedicamentoDto>>> GetMedicamentoPrecioMayor50k()
@@ -62,6 +79,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Medicamento>> Post(MedicamentoDto medicamentoDto)
@@ -79,6 +97,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -95,6 +114,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

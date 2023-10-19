@@ -38,6 +38,10 @@ namespace Aplicacion.Repository
         {
             return await _context.Set<T>().ToListAsync();
         }
+        public virtual async Task<IEnumerable<T>> GetNormally()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
 
         public virtual async Task<T> GetByIdAsync(int id)
         {
