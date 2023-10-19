@@ -95,7 +95,6 @@ namespace Persistencia.Data.Configurations
                 Precio = 70,
                 IdTipoMovimientoFk = 2
             }
-            // Agrega más movimientos según sea necesario
             );
 
             

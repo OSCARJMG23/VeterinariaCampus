@@ -16,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class MedicamentoController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,7 +29,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<MedicamentoDto>>> Get([FromQuery]Params medicamentoParams)
@@ -39,7 +39,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [MapToApiVersion("1.1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,7 +50,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpGet("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<MedicamentosDto>> Get(int id)
@@ -60,7 +58,6 @@ namespace ApiVet.Controllers
             return _mapper.Map<MedicamentosDto>(medicamento);
         }
         [HttpGet("laboratorio-genfar")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MedicamentosDto>>> GetMedicamentoLaboratorioGenfar()
@@ -69,7 +66,6 @@ namespace ApiVet.Controllers
             return _mapper.Map<List<MedicamentosDto>>(medicamento);
         }
         [HttpGet("precio-mayor-50k")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<MedicamentoDto>>> GetMedicamentoPrecioMayor50k()
@@ -79,7 +75,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Medicamento>> Post(MedicamentoDto medicamentoDto)
@@ -97,7 +92,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -114,7 +109,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

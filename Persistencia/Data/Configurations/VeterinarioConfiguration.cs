@@ -111,7 +111,6 @@ namespace Persistencia.Data.Configurations
                 Telefono = "555-222-1111",
                 Especialidad = "Peluqueria"
             }
-            // Puedes seguir agregando más veterinarios con diferentes especialidades
             );
         }
     }

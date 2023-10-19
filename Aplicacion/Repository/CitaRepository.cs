@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Persistencia.Data;
 
 namespace Aplicacion.Repository
@@ -15,5 +16,6 @@ namespace Aplicacion.Repository
         {
             _context = context;
         }
+
     }
 }

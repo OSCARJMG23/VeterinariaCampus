@@ -16,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class LaboratorioController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,7 +29,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<LaboratorioDto>>> Get([FromQuery]Params laboratorioParams)
@@ -39,7 +39,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [MapToApiVersion("1.1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,7 +50,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpGet("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<LaboratoriosDto>> Get(int id)
@@ -61,7 +59,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Laboratorio>> Post(LaboratorioDto laboratorioDto)
@@ -79,7 +76,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,7 +93,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

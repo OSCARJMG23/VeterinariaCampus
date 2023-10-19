@@ -97,7 +97,6 @@ namespace Persistencia.Data.Configurations
                 Direccion = "Avenida Principal Animal",
                 Telefono = "555-123-4567"
             }
-            // Puedes seguir agregando más nombres de laboratorios según sea necesario
         );
         }
     }

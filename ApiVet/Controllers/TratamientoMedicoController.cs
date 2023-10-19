@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiVet.Dtos;
+using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class TratamientoMedicoController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,10 +31,11 @@ namespace ApiVet.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<TratamientoMedicoDto>>> Get()
+        public async Task<ActionResult<Pager<TratamientoMedicoDto>>> Get([FromQuery]Params tratamientoParams)
         {
-            var tratamientoMedico = await _unitOfWork.TratamientosMedicos.GetAllAsync();
-            return _mapper.Map<List<TratamientoMedicoDto>>(tratamientoMedico);
+            var movimiento = await _unitOfWork.TratamientosMedicos.GetAllAsync1(tratamientoParams.PageIndex,tratamientoParams.PageSize, tratamientoParams.Search,"Id");
+            var listaMovimientosDto= _mapper.Map<List<TratamientoMedicoDto>>(movimiento.registros);
+            return new Pager<TratamientoMedicoDto>(listaMovimientosDto, movimiento.totalRegistros,tratamientoParams.PageIndex,tratamientoParams.PageSize,tratamientoParams.Search);
         }
         
         [HttpGet("{id}")]
@@ -61,6 +65,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

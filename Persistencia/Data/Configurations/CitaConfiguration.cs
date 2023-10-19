@@ -93,7 +93,6 @@ namespace Persistencia.Data.Configurations
                 IdMascotaFk = 3,
                 IdVeterinarioFk = 4
             }
-            // Puedes seguir agregando más citas según sea necesario
         );
         }
     }

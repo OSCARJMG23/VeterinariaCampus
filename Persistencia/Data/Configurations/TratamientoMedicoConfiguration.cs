@@ -70,7 +70,6 @@ namespace Persistencia.Data.Configurations
                 IdCitaFk = 3,
                 IdMedicamentoFk = 5
             }
-            // Agrega más tratamientos médicos según sea necesario
             );
         }
     }

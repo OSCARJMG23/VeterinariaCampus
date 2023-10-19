@@ -29,7 +29,6 @@ namespace Persistencia.Data.Configurations
                 Id = 2,
                 Nombre = "Venta"
             }
-            // Puedes seguir agregando más tipos de movimiento según sea necesario
             );
             
         }

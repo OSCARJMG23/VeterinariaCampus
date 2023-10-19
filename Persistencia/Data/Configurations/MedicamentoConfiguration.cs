@@ -85,7 +85,7 @@ namespace Persistencia.Data.Configurations
                 Id = 4,
                 Nombre = "PetRxPlus",
                 Stock = 120,
-                Precio = 15.99,
+                Precio = 50000,
                 IdLaboratorioFk = 5
             },
             new Medicamento
@@ -96,7 +96,6 @@ namespace Persistencia.Data.Configurations
                 Precio = 11.99,
                 IdLaboratorioFk = 6
             }
-            // Puedes seguir agregando más nombres de medicamentos según sea necesario
             );
 
 

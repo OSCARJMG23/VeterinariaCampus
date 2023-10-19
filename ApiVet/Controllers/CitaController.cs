@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiVet.Dtos;
+using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class CitaController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,10 +31,11 @@ namespace ApiVet.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<CitaDto>>> Get()
+        public async Task<ActionResult<Pager<CitaDto>>> Get([FromQuery]Params citaParams)
         {
-            var cita = await _unitOfWork.Citas.GetAllAsync();
-            return _mapper.Map<List<CitaDto>>(cita);
+            var citas = await _unitOfWork.Citas.GetAllAsync(citaParams.PageIndex,citaParams.PageSize, citaParams.Search);
+            var listaCitasDto= _mapper.Map<List<CitaDto>>(citas.registros);
+            return new Pager<CitaDto>(listaCitasDto, citas.totalRegistros,citaParams.PageIndex,citaParams.PageSize,citaParams.Search);
         }
         
         [HttpGet("{id}")]
@@ -61,6 +65,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

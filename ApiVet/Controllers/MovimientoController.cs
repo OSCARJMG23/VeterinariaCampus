@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiVet.Dtos;
+using ApiVet.Helpers;
 using AutoMapper;
 using Dominio.Entities;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class MovimientoController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,10 +31,11 @@ namespace ApiVet.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<MovimientoDto>>> Get()
+        public async Task<ActionResult<Pager<MovimientoDto>>> Get([FromQuery]Params movimientoParams)
         {
-            var movimiento = await _unitOfWork.Movimientos.GetAllAsync();
-            return _mapper.Map<List<MovimientoDto>>(movimiento);
+            var movimiento = await _unitOfWork.Movimientos.GetAllAsync1(movimientoParams.PageIndex,movimientoParams.PageSize, movimientoParams.Search,"Id");
+            var listaMovimientosDto= _mapper.Map<List<MovimientoDto>>(movimiento.registros);
+            return new Pager<MovimientoDto>(listaMovimientosDto, movimiento.totalRegistros,movimientoParams.PageIndex,movimientoParams.PageSize,movimientoParams.Search);
         }
         
         [HttpGet("{id}")]
@@ -69,6 +73,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

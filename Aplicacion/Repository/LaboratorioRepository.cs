@@ -21,7 +21,7 @@ namespace Aplicacion.Repository
             var query = _context.Laboratorios  as IQueryable<Laboratorio>;
             if(!string.IsNullOrEmpty(search))
             {
-                query = query.Where(p => p.Nombre.ToLower().Contains(search));
+                query = query.Where(p => p.Nombre.ToLower().Contains(search) || p.Id.Equals(int.Parse(search)));
             }
             query = query.OrderBy(p => p.Id);
             var totalRegistros = await query.CountAsync();

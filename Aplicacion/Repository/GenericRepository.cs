@@ -71,5 +71,21 @@ namespace Aplicacion.Repository
                 .ToListAsync();
             return (totalRegistros, registros);
         }
+        public virtual async Task<(int totalRegistros, IEnumerable<T> registros)> GetAllAsync1(int pageIndex, int pageSize, string search, string Nombre)
+        {
+            var query = _context.Set<T>().AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => EF.Property<string>(p, $"{Nombre}").ToLower().Contains(search.ToLower()));
+            }
+            query = query.OrderBy(p => EF.Property<int>(p, "Id"));
+            var totalRegistros = await query.CountAsync();
+            var registros = await query
+                                    
+                                    .Skip((pageIndex - 1)* pageSize)
+                                    .Take(pageSize)
+                                    .ToListAsync();
+            return (totalRegistros, registros);
+        }
     }
 }

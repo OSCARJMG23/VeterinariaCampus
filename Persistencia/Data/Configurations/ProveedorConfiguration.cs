@@ -69,7 +69,6 @@ namespace Persistencia.Data.Configurations
                 Direccion = "Carrera de Suministros 654",
                 Telefono = "555-666-6666"
             }
-            // Puedes seguir agregando más proveedores según sea necesario
         );
             
         }

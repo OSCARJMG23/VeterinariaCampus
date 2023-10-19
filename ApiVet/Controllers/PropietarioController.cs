@@ -16,6 +16,7 @@ namespace ApiVet.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [Authorize]
     public class PropietarioController : BaseApiController
     {
         private IUnitOfWork _unitOfWork;
@@ -28,7 +29,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<PropietarioDto>>> Get([FromQuery]Params propietarioParams)
@@ -39,7 +39,6 @@ namespace ApiVet.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [MapToApiVersion("1.1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,7 +50,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpGet("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PropietariosDto>> Get(int id)
@@ -60,7 +58,6 @@ namespace ApiVet.Controllers
             return _mapper.Map<PropietariosDto>(propietario);
         }
         [HttpGet("mascotas")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<PropietariosDto>>> GetPropietarioConMascotas()
@@ -70,7 +67,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Propietario>> Post(PropietarioDto propietarioDto)
@@ -88,7 +84,7 @@ namespace ApiVet.Controllers
         }
         
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -105,7 +101,6 @@ namespace ApiVet.Controllers
         }
         
         [HttpDelete("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
