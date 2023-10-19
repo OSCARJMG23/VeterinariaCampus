@@ -63,4 +63,15 @@
       Respuesta
       ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/ce9dc46c-19b2-44fd-90e8-cef41a860a31)
 
+  * El versionado se usa en los metodos Get de la version 1.1 donde se listan las respuestas de manera normal (Sin paginacion)
+    - Sin versionado los Get se muestran de la siguiente manera:
+      
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/663f79bf-9b7b-43bd-8290-0bce840d8444)
+
+    - Y con versionado usando: http://localhost:5078/api/laboratorio?ver=1.1
+      Se muestra de la siguiente manera
+      
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/522de03b-467a-473b-88f0-b16b544e0b39)
+
+
 
