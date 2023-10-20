@@ -11,18 +11,18 @@ namespace Aplicacion.UnitOfWork
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly ApiVetContext _context;
-        private CitaRepository _citas;
-        private EspecieRepository _especies;
-        private LaboratorioRepository _laboratorios;
-        private MascotaRepository _mascotas;
-        private MedicamentoRepository _medicamentos;
-        private MovimientoRepository _movimientos;
-        private PropietarioRepository _propietarios;
-        private ProveedorRepository _proveedores;
-        private RazaRepository _razas;
-        private TipoMovimientoRepository _tipoMovimientos;
-        private TratamientoMedicoRepository _tratamientosMedicos;
-        private VeterinarioRepository _veterinarios;
+        private ICitaRepository _citas;
+        private IEspecieRepository _especies;
+        private ILaboratorioRepository _laboratorios;
+        private IMascotaRepository _mascotas;
+        private IMedicamentoRepository _medicamentos;
+        private IMovimientoRepository _movimientos;
+        private IPropietarioRepository _propietarios;
+        private IProveedorRepository _proveedores;
+        private IRazaRepository _razas;
+        private ITipoMovimientoRepository _tipoMovimientos;
+        private ITratamientoMedicoRepository _tratamientosMedicos;
+        private IVeterinarioRepository _veterinarios;
         private IRolRepository _roles;
         private IUserRepository _users;
 
