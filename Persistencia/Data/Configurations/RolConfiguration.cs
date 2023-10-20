@@ -17,6 +17,19 @@ namespace Persistencia.Data.Configurations
             builder.Property(p => p.Nombre)
             .HasMaxLength(50)
             .IsRequired();
+
+            builder.HasData(
+            new Rol
+            {
+                Id = 1,
+                Nombre = "Administrador"
+            },
+            new Rol
+            {
+                Id = 2,
+                Nombre = "Empleado"
+            }
+            );
         }
     }
 }

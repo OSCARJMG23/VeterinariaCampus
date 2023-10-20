@@ -41,6 +41,9 @@ namespace ApiVet.Profiles
 
             CreateMap<Veterinario, VeterinarioDto>().ReverseMap();
             CreateMap<Veterinario, VeterinariosDto>().ReverseMap();
+            
+            CreateMap<TipoMovimiento, TipoMovimientoDto>().ReverseMap();
+
         }
     }
 }

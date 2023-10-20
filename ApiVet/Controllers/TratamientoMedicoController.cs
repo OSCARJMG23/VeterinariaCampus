@@ -33,7 +33,7 @@ namespace ApiVet.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<TratamientoMedicoDto>>> Get([FromQuery]Params tratamientoParams)
         {
-            var movimiento = await _unitOfWork.TratamientosMedicos.GetAllAsync1(tratamientoParams.PageIndex,tratamientoParams.PageSize, tratamientoParams.Search,"Id");
+            var movimiento = await _unitOfWork.TratamientosMedicos.GetAllAsync(tratamientoParams.PageIndex,tratamientoParams.PageSize, tratamientoParams.Search);
             var listaMovimientosDto= _mapper.Map<List<TratamientoMedicoDto>>(movimiento.registros);
             return new Pager<TratamientoMedicoDto>(listaMovimientosDto, movimiento.totalRegistros,tratamientoParams.PageIndex,tratamientoParams.PageSize,tratamientoParams.Search);
         }

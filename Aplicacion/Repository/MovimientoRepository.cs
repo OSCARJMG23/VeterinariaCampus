@@ -17,6 +17,23 @@ namespace Aplicacion.Repository
             _context = context;
         }
 
+        public override async Task<(int totalRegistros, IEnumerable<Movimiento> registros)> GetAllAsync(int pageIndex, int pageSize, string search)
+        {
+            var query = _context.Movimientos  as IQueryable<Movimiento>;
+            if(!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Id.Equals(int.Parse(search)));
+            }
+            query = query.OrderBy(p => p.Id);
+            var totalRegistros = await query.CountAsync();
+            var registros = await query   
+                                    .Include(t=>t.TipoMovimiento)                 
+                                    .Skip((pageIndex - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToListAsync();
+            return (totalRegistros, registros);
+        }
+
         public async Task<IEnumerable<object>> GetMovimientosYvalorTotalXmovimiento()
         {
             var movimientos = await _context.Movimientos

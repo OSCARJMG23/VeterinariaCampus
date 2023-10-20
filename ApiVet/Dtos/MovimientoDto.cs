@@ -12,6 +12,6 @@ namespace ApiVet.Dtos
         public double Precio { get; set; }
         public DateTime FechaMovimiento { get; set; }
         public int IdTipoMovimientoFk { get; set; }
-        public TipoMovimiento TipoMovimiento { get; set; }
+        public TipoMovimientoDto TipoMovimiento { get; set; }
     }
 }
