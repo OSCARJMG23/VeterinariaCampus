@@ -73,5 +73,27 @@
       
       ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/522de03b-467a-473b-88f0-b16b544e0b39)
 
+  * Endpoints relacionados con jwt:
+    - Register: http://localhost:5078/api/user/register
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/23a95a3a-e856-41fe-8d2f-717ed6dd3931)
+
+    - Add Rol: http://localhost:5078/api/user/addrole
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/6c2bcf00-406d-425e-8a8a-b2d91f96971c)
+
+    - Token: http://localhost:5078/api/user/token
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/fa80a791-24e0-42bc-8f6e-f86baa032b3d)
+
+    - Refresh Token: http://localhost:5078/api/user/refresh-token
+      ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/fce0005e-29d6-430f-976b-98892f9be409)
+
+      * Nota: Para probar el funcionamiento de JWT si es necesario realizar el proceso de registrar, ya que no incluyo usuarios para el llenado de las tablas.
+      * Nota 2: Para el paginado de Citas, Movimientos y Tratamientos medicos, para la consulta por query las manejé mediante el Id, ejemplo: http://localhost:5078/api/tratamientomedico?search=1
+     
+        ![image](https://github.com/OSCARJMG23/VeterinariaCampus/assets/133609079/ec74e093-e748-42c4-92cc-51e6aebd0a92)
+
+        
+
+
+
 
 
